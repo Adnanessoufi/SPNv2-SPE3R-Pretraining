@@ -2,45 +2,45 @@
 
 I am using this repository for my research on spacecraft pose estimation.
 
-I started from the original SPNv2 implementation by Tae Ha Park and the SLAB Group, and I extended it to study whether pretraining on SPE3R can help before training on SPEED+.
+I started from the original SPNv2 implementation and I extended it to study if SPE3R pretraining can help before training on SPEED+.
 
 Original SPNv2 repository: https://github.com/tpark94/spnv2
 
 ## What I added
 
 - SPE3R dataset support
-- SPE3R pretraining pipeline
-- A rotation loss for the SPE3R setup
-- Changes to the training and inference code
-- A tool to transfer the SPE3R-trained EfficientNet and BiFPN weights into the Tango SPNv2 model
-- Style augmentation generation for SPEED+ training images
-- Experiment configurations for Model A and Model B
-- Frozen Lightbox and Sunlamp evaluation
+- SPE3R pretraining
+- Rotation loss for the SPE3R setup
+- Changes in the training and inference pipeline
+- A tool to transfer the SPE3R-trained EfficientNet and BiFPN weights into SPNv2
+- Style augmentation generation for SPEED+ images
+- Experiment files for the different training setups
+- Lightbox and Sunlamp evaluation
 - Preliminary result tracking
 
-## Experiment idea
+## What I am comparing
 
-I compare two training pipelines:
+I am comparing two main models:
 
 **Model A:** ImageNet -> SPEED+ Tango
 
 **Model B:** ImageNet -> SPE3R -> SPEED+ Tango
 
-The goal is to check whether SPE3R pretraining improves the final spacecraft pose estimation performance.
+The main question is whether SPE3R pretraining can improve the final spacecraft pose estimation results.
 
-## Current results
+## Current status
 
-The first single-GPU experiments were not a fair final comparison because I used a physical batch size of 2 instead of the intended batch size of 16. This caused many more optimizer updates per epoch.
+I already ran preliminary experiments, but the first setup used a physical batch size of 2 instead of the intended batch size of 16.
 
-Because of that, I am treating these results as preliminary and I decided to repeat the experiments using the same controlled setup for both models.
+Because of that, I do not consider those results a fair final comparison. I am repeating the experiments with the same controlled setup for both models.
 
-The current results and notes are in:
+The current results and notes are here:
 
 ```text
 results/README.md
 ```
 
-## Main research files
+## Main files I added or changed
 
 ```text
 core/dataset/SPE3RDataset.py
@@ -60,14 +60,14 @@ Install PyTorch first, then:
 pip install -r requirements.txt
 ```
 
-The project uses the original SPNv2 codebase, so the SPEED+ setup and the original model requirements still apply.
+The original SPNv2 code uses `tangoPoints.mat`. I keep a note under `core/utils/models/` with the upstream link for that file.
 
 ## Credit
 
 This work is based on the original SPNv2 implementation by Tae Ha Park and the Space Rendezvous Laboratory (SLAB), Stanford University.
 
-SPNv2 paper:
+Original paper:
 
 Tae Ha Park and Simone D'Amico, "Robust multi-task learning and online refinement for spacecraft pose estimation across domain gap", Advances in Space Research, 2023.
 
-I kept the original MIT license and copyright notice in `LICENSE.md`.
+The original MIT license and copyright notice are kept in `LICENSE.md`.
